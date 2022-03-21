@@ -3,11 +3,13 @@ public class PriotityNode {
     int burstTime;
     int remainTime;
     int priority;
+    int arriveTime;
 
-    public PriotityNode(String PID, int burstTime, int priority) {
+    public PriotityNode(String PID, int burstTime, int priority, int arriveTime) {
         this.PID = PID;
         this.remainTime = this.burstTime = burstTime;
         this.priority = priority;
+        this.arriveTime = arriveTime;
     }
 
     public String getPID() {
