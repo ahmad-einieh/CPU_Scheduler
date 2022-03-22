@@ -5,9 +5,11 @@ import java.util.LinkedList;
 
 public class RR {
 
+    private int quantum;
     private final LinkedList<RRJob> jobs = new LinkedList<>();
 
-    public RR() {
+    public RR(int quantum) {
+        this.quantum = quantum;
         getJobs();
         schedule();
     }
