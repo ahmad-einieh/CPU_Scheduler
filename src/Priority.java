@@ -27,7 +27,7 @@ public class Priority {
 
                 int[] nums = getNums(br.readLine());
 
-                jobs.add(new PriorityJob(pId, nums[1], nums[0], arrivalTime++));
+                jobs.add(new PriorityJob(pId, arrivalTime++, nums[1], nums[0]));
             }
             display();
         } catch (Exception e) {

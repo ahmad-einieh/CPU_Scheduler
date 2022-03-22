@@ -28,7 +28,7 @@ public class RR {
                     break;
                 int burstTime = Integer.parseInt(br.readLine());
 
-                jobs.add(new RRJob(pId, burstTime, arrivalTime++));
+                jobs.add(new RRJob(pId, arrivalTime++, burstTime));
             }
             display();
         } catch (Exception e) {

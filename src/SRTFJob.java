@@ -34,7 +34,7 @@ public class SRTFJob {
 
     @Override
     public String toString () {
-        return "SRTJob{" +
+        return "SRTFJob{" +
                 "pId='" + pId + '\'' +
                 ", burstT=" + burstT +
                 ", arrivalT=" + arrivalT +

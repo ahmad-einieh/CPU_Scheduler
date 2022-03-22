@@ -1,19 +1,23 @@
 public class PriorityJob {
 
     private final String pId;
+    private final int arrivalT;
     private final int priority;
     private final int burstT;
-    private final int arrivalT;
 
-    public PriorityJob(String pId, int priority, int burstT, int arrivalT) {
+    public PriorityJob(String pId, int arrivalT, int priority, int burstT) {
         this.pId = pId;
+        this.arrivalT = arrivalT;
         this.priority = priority;
         this.burstT = burstT;
-        this.arrivalT = arrivalT;
     }
 
     public String getPId() {
         return pId;
+    }
+
+    public int getArrivalT() {
+        return arrivalT;
     }
 
     public int getPriority() {
@@ -24,17 +28,13 @@ public class PriorityJob {
         return burstT;
     }
 
-    public int getArrivalT() {
-        return arrivalT;
-    }
-
     @Override
     public String toString() {
         return "PriorityJob{" +
                 "pId='" + pId + '\'' +
+                ", arrivalT=" + arrivalT +
                 ", priority=" + priority +
                 ", burstT=" + burstT +
-                ", arrivalT=" + arrivalT +
                 '}';
     }
 }

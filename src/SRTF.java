@@ -26,7 +26,7 @@ public class SRTF {
                     break;
                 int burstTime = Integer.parseInt(br.readLine());
 
-                jobs.add(new SRTFJob(pId, burstTime, arrivalTime++));
+                jobs.add(new SRTFJob(pId, arrivalTime++, burstTime));
             }
             display();
         } catch (Exception e) {
