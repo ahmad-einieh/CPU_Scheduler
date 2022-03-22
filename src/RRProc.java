@@ -1,15 +1,15 @@
-public class PriorityJob {
+public class RRProc {
 
     private final String pId;
     private final int arrivalT;
-    private final int priority;
     private final int burstT;
+    private int remainingT;
 
-    public PriorityJob(String pId, int arrivalT, int priority, int burstT) {
+    public RRProc(String pId, int arrivalT, int burstT) {
         this.pId = pId;
         this.arrivalT = arrivalT;
-        this.priority = priority;
         this.burstT = burstT;
+        remainingT = burstT;
     }
 
     public String getPId() {
@@ -20,21 +20,25 @@ public class PriorityJob {
         return arrivalT;
     }
 
-    public int getPriority() {
-        return priority;
-    }
-
     public int getBurstT() {
         return burstT;
     }
 
+    public int getRemainingT() {
+        return remainingT;
+    }
+
+    public void setRemainingT(int remainingT) {
+        this.remainingT = remainingT;
+    }
+
     @Override
     public String toString() {
-        return "PriorityJob{" +
+        return "RR Process{" +
                 "pId='" + pId + '\'' +
                 ", arrivalT=" + arrivalT +
-                ", priority=" + priority +
                 ", burstT=" + burstT +
+                ", remainingT=" + remainingT +
                 '}';
     }
 }

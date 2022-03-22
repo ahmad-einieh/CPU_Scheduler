@@ -1,11 +1,11 @@
-public class SRTFJob {
+public class SRTFProc {
 
     private final String pId;
     private final int arrivalT;
     private final int burstT;
     private int remainingT;
 
-    public SRTFJob(String pId, int arrivalT, int burstT) {
+    public SRTFProc(String pId, int arrivalT, int burstT) {
         this.pId = pId;
         this.burstT = burstT;
         this.arrivalT = arrivalT;
@@ -34,7 +34,7 @@ public class SRTFJob {
 
     @Override
     public String toString () {
-        return "SRTFJob{" +
+        return "SRTF Process{" +
                 "pId='" + pId + '\'' +
                 ", burstT=" + burstT +
                 ", arrivalT=" + arrivalT +

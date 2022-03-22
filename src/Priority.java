@@ -5,14 +5,16 @@ import java.util.LinkedList;
 
 public class Priority {
 
-    private final LinkedList<PriorityJob> jobs = new LinkedList<>();
+    private final LinkedList<PriorityProc> processes = new LinkedList<>();
+    private final LinkedList<Job> timeline = new LinkedList<>();
 
     public Priority() {
-        getJobs();
+        getProcesses();
         schedule();
+        output();
     }
 
-    private void getJobs() {
+    private void getProcesses() {
         int arrivalTime = 0;
 
         File file = new File("src/job2.txt");
@@ -27,7 +29,7 @@ public class Priority {
 
                 int[] nums = getNums(br.readLine());
 
-                jobs.add(new PriorityJob(pId, arrivalTime++, nums[1], nums[0]));
+                processes.add(new PriorityProc(pId, arrivalTime++, nums[1], nums[0]));
             }
             display();
         } catch (Exception e) {
@@ -53,9 +55,14 @@ public class Priority {
     }
 
     private void display() {
-        System.out.println("Priority Jobs are:");
-        for (PriorityJob job : jobs) {
-            System.out.println(job);
-        }
+        System.out.println("Priority Processes are:");
+        for (PriorityProc process : processes)
+            System.out.println(process);
+    }
+
+    private void output() {
+        System.out.println("/////////////////// Priority OUTPUT ////////////////////");
+
+        //TODO
     }
 }

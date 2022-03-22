@@ -5,14 +5,16 @@ import java.util.LinkedList;
 
 public class SRTF {
 
-    private final LinkedList<SRTFJob> jobs = new LinkedList<>();
+    private final LinkedList<SRTFProc> processes = new LinkedList<>();
+    private final LinkedList<Job> timeline = new LinkedList<>();
 
     public SRTF() {
-        getJobs();
+        getProcesses();
         schedule();
+        output();
     }
 
-    private void getJobs() {
+    private void getProcesses() {
         int arrivalTime = 0;
 
         File file = new File("src/job1.txt");
@@ -26,7 +28,7 @@ public class SRTF {
                     break;
                 int burstTime = Integer.parseInt(br.readLine());
 
-                jobs.add(new SRTFJob(pId, arrivalTime++, burstTime));
+                processes.add(new SRTFProc(pId, arrivalTime++, burstTime));
             }
             display();
         } catch (Exception e) {
@@ -39,9 +41,14 @@ public class SRTF {
     }
 
     private void display() {
-        System.out.println("SRTF Jobs are:");
-        for (SRTFJob job : jobs) {
-            System.out.println(job);
-        }
+        System.out.println("SRTF Processes are:");
+        for (SRTFProc process : processes)
+            System.out.println(process);
+    }
+
+    private void output() {
+        System.out.println("/////////////////// SRTF OUTPUT ////////////////////");
+
+        //TODO
     }
 }

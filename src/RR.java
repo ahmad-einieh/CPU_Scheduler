@@ -5,16 +5,18 @@ import java.util.LinkedList;
 
 public class RR {
 
-    private int quantum;
-    private final LinkedList<RRJob> jobs = new LinkedList<>();
+    private final int QUANTUM;
+    private final LinkedList<RRProc> processes = new LinkedList<>();
+    private final LinkedList<Job> timeline = new LinkedList<>();
 
     public RR(int quantum) {
-        this.quantum = quantum;
-        getJobs();
+        QUANTUM = quantum;
+        getProcesses();
         schedule();
+        output();
     }
 
-    private void getJobs() {
+    private void getProcesses() {
         int arrivalTime = 0;
 
         File file = new File("src/job1.txt");
@@ -28,7 +30,7 @@ public class RR {
                     break;
                 int burstTime = Integer.parseInt(br.readLine());
 
-                jobs.add(new RRJob(pId, arrivalTime++, burstTime));
+                processes.add(new RRProc(pId, arrivalTime++, burstTime));
             }
             display();
         } catch (Exception e) {
@@ -41,9 +43,14 @@ public class RR {
     }
 
     private void display() {
-        System.out.println("RR Jobs are:");
-        for (RRJob job : jobs) {
-            System.out.println(job);
-        }
+        System.out.println("RR Processes are:");
+        for (RRProc process : processes)
+            System.out.println(process);
+    }
+
+    private void output() {
+        System.out.println("/////////////////// RR OUTPUT ////////////////////");
+
+        //TODO
     }
 }
