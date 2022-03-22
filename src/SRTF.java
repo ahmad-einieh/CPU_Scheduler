@@ -3,11 +3,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedList;
 
-public class SRT {
+public class SRTF {
 
-    private final LinkedList<SRTJob> jobs = new LinkedList<>();
+    private final LinkedList<SRTFJob> jobs = new LinkedList<>();
 
-    public SRT() {
+    public SRTF() {
         getJobs();
         schedule();
     }
@@ -26,7 +26,7 @@ public class SRT {
                     break;
                 int burstTime = Integer.parseInt(br.readLine());
 
-                jobs.add(new SRTJob(pId, burstTime, arrivalTime++));
+                jobs.add(new SRTFJob(pId, burstTime, arrivalTime++));
             }
             display();
         } catch (Exception e) {
@@ -39,8 +39,8 @@ public class SRT {
     }
 
     private void display() {
-        System.out.println("SRT Jobs are:");
-        for (SRTJob job : jobs) {
+        System.out.println("SRTF Jobs are:");
+        for (SRTFJob job : jobs) {
             System.out.println(job);
         }
     }
