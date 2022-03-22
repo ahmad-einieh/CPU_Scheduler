@@ -24,16 +24,28 @@ public class Priority {
                 String pId = br.readLine();
                 if (pId.equals("[End of job.txt]"))
                     break;
-                String line = br.readLine();
-                int burstTime = Integer.parseInt(String.valueOf(line.charAt(0)));
-                int priority = Integer.parseInt(String.valueOf(line.charAt(2)));
 
-                jobs.add(new PriorityJob(pId, priority, burstTime, arrivalTime++));
+                int[] nums = getNums(br.readLine());
+
+                jobs.add(new PriorityJob(pId, nums[1], nums[0], arrivalTime++));
             }
             display();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private int[] getNums(String line) {
+        int burstT, priority, counter = 0;
+        String strBurstT = "";
+
+        while (line.charAt(counter) != '\t')
+            strBurstT += line.charAt(counter++);
+        counter++;
+
+        burstT = Integer.parseInt(strBurstT);
+        priority = Integer.parseInt(String.valueOf(line.charAt(counter)));
+        return new int[]{burstT, priority};
     }
 
     private void schedule() {

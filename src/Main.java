@@ -7,11 +7,9 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int quantum = sc.nextInt();
 
-
         SRT srt = new SRT();
         Priority priority = new Priority();
         RR rr = new RR(quantum);
-
 
     }
 

@@ -1,37 +1,44 @@
 public class RRJob {
 
     private final String pId;
-    private int burstT;
     private final int arrivalT;
+    private final int burstT;
+    private int remainingBT;
 
-    public RRJob(String pId, int burstT, int arrivalT) {
+    public RRJob(String pId,  int arrivalT, int burstT) {
         this.pId = pId;
-        this.burstT = burstT;
         this.arrivalT = arrivalT;
+        this.burstT = burstT;
+        remainingBT = burstT;
     }
 
     public String getPId() {
         return pId;
     }
 
-    public void setBurstT(int burstT) {
-        this.burstT = burstT;
+    public int getArrivalT() {
+        return arrivalT;
     }
 
     public int getBurstT() {
         return burstT;
     }
 
-    public int getArrivalT() {
-        return arrivalT;
+    public int getRemainingBT() {
+        return remainingBT;
+    }
+
+    public void setRemainingBT(int remainingBT) {
+        this.remainingBT = remainingBT;
     }
 
     @Override
     public String toString() {
         return "RRJob{" +
                 "pId='" + pId + '\'' +
-                ", burstT=" + burstT +
                 ", arrivalT=" + arrivalT +
+                ", burstT=" + burstT +
+                ", remainingBT=" + remainingBT +
                 '}';
     }
 }
