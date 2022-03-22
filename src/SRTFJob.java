@@ -1,37 +1,45 @@
 public class SRTFJob {
 
     private final String pId;
-    private int burstT;
     private final int arrivalT;
+    private final int burstT;
+    private int remainingT;
 
-    public SRTFJob(String pId, int burstT, int arrivalT) {
+    public SRTFJob(String pId, int arrivalT, int burstT) {
         this.pId = pId;
         this.burstT = burstT;
         this.arrivalT = arrivalT;
+        remainingT = burstT;
     }
 
     public String getPId() {
         return pId;
     }
 
-    public void setBurstT(int burstT) {
-        this.burstT = burstT;
-    }
-
-    public int getBurstT() {
-        return burstT;
-    }
-
-    public int getArrivalT() {
+    public int getArrivalT () {
         return arrivalT;
     }
 
+    public int getBurstT () {
+        return burstT;
+    }
+
+    public int getRemainingT () {
+        return remainingT;
+    }
+
+    public void setRemainingT ( int remainingT){
+        this.remainingT = remainingT;
+    }
+
     @Override
-    public String toString() {
-        return "SRTFJob{" +
+    public String toString () {
+        return "SRTJob{" +
                 "pId='" + pId + '\'' +
                 ", burstT=" + burstT +
                 ", arrivalT=" + arrivalT +
+                ", burstT=" + burstT +
+                ", remainingT=" + remainingT +
                 '}';
     }
 }
