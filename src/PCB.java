@@ -13,14 +13,9 @@ public class PCB {
     public void getData() {
 
         int count = 0;
-        //Queue<GNode> queue1 = new LinkedList<>();
-
-
-        File file = new File(
-                "D:\\projects\\CPU_Scheduler\\src\\job1.txt");
-
-        BufferedReader br
-                = null;
+        String userDirectory = new File("").getAbsolutePath();
+        File file = new File(userDirectory+"\\src\\job1.txt");
+        BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(file));
             String st;
@@ -39,14 +34,11 @@ public class PCB {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //System.out.println(queue1.size());
-
-
     }
 
     public void SRTF() {
-       //System.out.println(queue.peek());
-        for (var i : queue){
+        //System.out.println(queue.peek());
+        for (var i : queue) {
             //if ()
         }
     }
