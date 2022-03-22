@@ -5,11 +5,9 @@ public class Main {
     private static final LinkedList<RRJob> jobs = new LinkedList<>();
 
     public static void main(String[] args) {
-        SRT srt = new SRT();
+        SRTF SRTF = new SRTF();
         Priority priority = new Priority();
         RR rr = new RR();
-
-
     }
 
 }

@@ -1,10 +1,10 @@
-public class SRTJob {
+public class SRTFJob {
 
     private final String pId;
     private int burstT;
     private final int arrivalT;
 
-    public SRTJob(String pId, int burstT, int arrivalT) {
+    public SRTFJob(String pId, int burstT, int arrivalT) {
         this.pId = pId;
         this.burstT = burstT;
         this.arrivalT = arrivalT;
@@ -28,7 +28,7 @@ public class SRTJob {
 
     @Override
     public String toString() {
-        return "SRTJob{" +
+        return "SRTFJob{" +
                 "pId='" + pId + '\'' +
                 ", burstT=" + burstT +
                 ", arrivalT=" + arrivalT +
