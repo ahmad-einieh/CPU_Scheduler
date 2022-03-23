@@ -37,7 +37,8 @@ public class SRTF {
     }
 
     private void schedule() {
-        //TODO
+
+
     }
 
     private void display() {
