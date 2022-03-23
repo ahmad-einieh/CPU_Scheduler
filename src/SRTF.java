@@ -1,6 +1,5 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class SRTF {
@@ -10,8 +9,18 @@ public class SRTF {
 
     public SRTF() {
         getProcesses();
+        //display();
         schedule();
-        output();
+        //output();
+    }
+
+    private static boolean checkCompleted(LinkedList<SRTFProc> parr) {
+        for (SRTFProc p : parr) {
+            if (!p.isCompleted()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void getProcesses() {
@@ -30,16 +39,77 @@ public class SRTF {
 
                 processes.add(new SRTFProc(pId, arrivalTime++, burstTime));
             }
-            display();
+            //display();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void schedule() {
+        OutputStreamWriter osw = new OutputStreamWriter(System.out);
+        PrintWriter out = new PrintWriter(osw);
+        ArrayList<SRTFProc> ppp = new ArrayList<>();
 
+        int clock = 0;
+        //int quantum = 1;
 
+        while (!checkCompleted(processes)) {
+            // Detect shortest burst process which
+            // has not completed
+            SRTFProc minBurstProc = null;
+            int minBurst = Integer.MAX_VALUE;
+            //System.out.println(minBurst);
+
+            for (SRTFProc p : processes) {
+                if (!p.isCompleted() && p.getArrivalT() <= clock && p.getRemainingT() < minBurst) {
+                    minBurst = p.getRemainingT();
+                    minBurstProc = p;
+                }
+            }
+
+            clock = clock + 1;
+
+            if (minBurstProc != null) {
+                ppp.add(minBurstProc);
+                //System.out.println(minBurstProc.getPId());
+                for (int i = 0; i < ppp.size(); i++) {
+                    if (i == ppp.size() - 1) {
+                        System.out.print(ppp.get(i).getPId());
+                    } else {
+                        System.out.print(ppp.get(i).getPId() + " -> ");
+                    }
+                }
+                System.out.println();
+                minBurstProc.reduceRemainingT(1);
+
+                if (minBurstProc.getRemainingT() == 0) {
+                    minBurstProc.setCompleteTime(clock);
+                }
+            }
+        }
+
+        int averageCompleteTime = 0;
+        int averageWaitingTime = 0;
+        out.println("PID\t   Completion_Time\t   Waiting_Time");
+
+        for (SRTFProc p : processes) {
+            averageCompleteTime += p.getCompleteTime();
+            out.print(p.getPId());
+            out.print("\t\t");
+            out.print(p.getCompleteTime());
+            out.print("\t\t\t\t");
+            //out.print(p.getArrivalT()+"\t");
+            var x = (p.getCompleteTime() - p.getArrivalT()) - p.getBurstT();
+            averageWaitingTime += x;
+            out.println(x);
+            //out.println(" units");
+        }
+        out.println("average complete time = " +(double) averageCompleteTime / processes.size());
+        out.println("average waiting time = " +(double) averageWaitingTime / processes.size());
+
+        out.close();
     }
+
 
     private void display() {
         System.out.println("SRTF Processes are:");
