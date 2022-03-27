@@ -38,13 +38,13 @@ public class Priority {
 
     private int[] getNums(String line) {
         int burstT, priority, counter = 0;
-        String strBurstT = "";
+        StringBuilder strBurstT = new StringBuilder();
 
         while (line.charAt(counter) != '\t')
-            strBurstT += line.charAt(counter++);
+            strBurstT.append(line.charAt(counter++));
         counter++;
 
-        burstT = Integer.parseInt(strBurstT);
+        burstT = Integer.parseInt(strBurstT.toString());
         priority = Integer.parseInt(String.valueOf(line.charAt(counter)));
         return new int[]{burstT, priority};
     }
