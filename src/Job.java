@@ -3,6 +3,7 @@ public class Job {
     private final String pId;
     private int startT;
     private int endT;
+    private int waitingT;
 
     public Job(String pId, int startT, int endT) {
         this.pId = pId;
@@ -28,6 +29,14 @@ public class Job {
 
     public void setEndT(int endT) {
         this.endT = endT;
+    }
+
+    public int getWaitingT() {
+        return waitingT;
+    }
+
+    public void setWaitingTime(int waitingT) {
+        this.waitingT = waitingT;
     }
 
     @Override

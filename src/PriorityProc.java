@@ -4,6 +4,7 @@ public class PriorityProc {
     private final int arrivalT;
     private final int priority;
     private final int burstT;
+    private boolean done;
 
     public PriorityProc(String pId, int arrivalT, int priority, int burstT) {
         this.pId = pId;
@@ -26,6 +27,14 @@ public class PriorityProc {
 
     public int getBurstT() {
         return burstT;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
     @Override

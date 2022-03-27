@@ -51,7 +51,40 @@ public class Priority {
     }
 
     private void schedule() {
-        //TODO
+        int time = 0;
+        PriorityProc proc;
+        while (true) {
+            proc = getHighest();
+
+            if (proc == null)
+                break;
+
+            int newTime = time + proc.getBurstT();
+
+            Job job = new Job(proc.getPId(), time, newTime);
+            job.setWaitingTime(time);
+
+            timeline.add(job);
+
+            proc.setDone(true);
+
+            time = newTime;
+        }
+    }
+
+    private PriorityProc getHighest() {
+        int hPriority = 0;
+        int hProc = -1;
+        for (int i = 0; i < processes.size(); i++) {
+            if (processes.get(i).getPriority() > hPriority && !processes.get(i).isDone()) {
+                hProc = i;
+                hPriority = processes.get(i).getPriority();
+            }
+        }
+        if (hProc == -1)
+            return null;
+        else
+            return processes.get(hProc);
     }
 
     private void display() {
@@ -61,8 +94,45 @@ public class Priority {
     }
 
     private void output() {
-        System.out.println("/////////////////// Priority OUTPUT ////////////////////");
+        int fullL = 0;
+        LinkedList<Integer> ls = new LinkedList<>();
+        for (int i = 0; i < timeline.size(); i++) {
+            int l = timeline.get(i).getEndT() - timeline.get(i).getStartT();
+            ls.add(l);
+            fullL += l;
+        }
 
-        //TODO
+        System.out.println("\n/////////////////// Priority OUTPUT ////////////////////");
+        for (int i = 0; i < fullL; i++)
+            System.out.print("---");
+        System.out.print("\n|");
+
+        for (int i = 0; i < timeline.size(); i++) {
+            for (int j = 0; j < ls.get(i); j++)
+                System.out.print(" ");
+
+            System.out.print(timeline.get(i).getPId());
+
+            for (int j = 0; j < ls.get(i); j++)
+                System.out.print(" ");
+
+            System.out.print("|");
+        }
+
+        System.out.println();
+        for (int i = 0; i < fullL; i++)
+            System.out.print("---");
+
+        System.out.print("\n0");
+        for (int i = 0; i < timeline.size(); i++) {
+            for (int j = 0; j < ls.get(i)*2+4; j++)
+                System.out.print(" ");
+
+            System.out.print(timeline.get(i).getEndT());
+        }
+    }
+
+    public static void main(String[] args) {
+        new Priority();
     }
 }
