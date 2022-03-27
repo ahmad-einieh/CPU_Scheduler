@@ -4,6 +4,8 @@ public class PriorityProc {
     private final int arrivalT;
     private final int priority;
     private final int burstT;
+    private int waitingT;
+    private int completionT;
     private boolean done;
 
     public PriorityProc(String pId, int arrivalT, int priority, int burstT) {
@@ -29,6 +31,22 @@ public class PriorityProc {
         return burstT;
     }
 
+    public int getWaitingT() {
+        return waitingT;
+    }
+
+    public void setWaitingT(int waitingT) {
+        this.waitingT = waitingT;
+    }
+
+    public int getCompletionT() {
+        return completionT;
+    }
+
+    public void setCompletionT(int completionT) {
+        this.completionT = completionT;
+    }
+
     public boolean isDone() {
         return done;
     }
@@ -39,11 +57,14 @@ public class PriorityProc {
 
     @Override
     public String toString() {
-        return "Priority Process{" +
-                "pId='" + pId + '\'' +
+        return "PriorityProc{" +
+                ", pId='" + pId + '\'' +
                 ", arrivalT=" + arrivalT +
                 ", priority=" + priority +
                 ", burstT=" + burstT +
+                ", waitingT=" + waitingT +
+                ", completionT=" + completionT +
+                ", done=" + done +
                 '}';
     }
 }

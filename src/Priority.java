@@ -31,7 +31,6 @@ public class Priority {
 
                 processes.add(new PriorityProc(pId, arrivalTime++, nums[1], nums[0]));
             }
-            display();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -59,16 +58,17 @@ public class Priority {
             if (proc == null)
                 break;
 
-            int newTime = time + proc.getBurstT();
+            int finishT = time + proc.getBurstT();
 
-            Job job = new Job(proc.getPId(), time, newTime);
-            job.setWaitingTime(time);
+            Job job = new Job(proc.getPId(), time, finishT);
+            proc.setWaitingT(finishT-proc.getBurstT());
+            proc.setCompletionT(finishT-time);
 
             timeline.add(job);
 
             proc.setDone(true);
 
-            time = newTime;
+            time = finishT;
         }
     }
 
@@ -87,22 +87,16 @@ public class Priority {
             return processes.get(hProc);
     }
 
-    private void display() {
-        System.out.println("Priority Processes are:");
-        for (PriorityProc process : processes)
-            System.out.println(process);
-    }
-
     private void output() {
         int fullL = 0;
         LinkedList<Integer> ls = new LinkedList<>();
-        for (int i = 0; i < timeline.size(); i++) {
-            int l = timeline.get(i).getEndT() - timeline.get(i).getStartT();
+        for (Job job : timeline) {
+            int l = job.getEndT() - job.getStartT();
             ls.add(l);
             fullL += l;
         }
 
-        System.out.println("\n/////////////////// Priority OUTPUT ////////////////////");
+        System.out.println("\n/////////////////// Priority OUTPUT ////////////////////\n");
         for (int i = 0; i < fullL; i++)
             System.out.print("---");
         System.out.print("\n|");
@@ -130,6 +124,23 @@ public class Priority {
 
             System.out.print(timeline.get(i).getEndT());
         }
+
+        System.out.println("\n");
+        for (PriorityProc proc : processes) {
+            System.out.println(proc.getPId() + ":-");
+            System.out.println("Waiting Time: " + proc.getWaitingT());
+            System.out.println("Completion Time: " + proc.getCompletionT());
+        }
+        System.out.println();
+
+        int sumWT = 0, sumCT = 0;
+        for (PriorityProc process : processes) {
+            sumWT += process.getWaitingT();
+            sumCT += process.getCompletionT();
+        }
+
+        System.out.println("Average Waiting Time: " + 1.0 * sumWT / processes.size());
+        System.out.println("Average Completion Time: " + 1.0 * sumCT / processes.size());
     }
 
     public static void main(String[] args) {
