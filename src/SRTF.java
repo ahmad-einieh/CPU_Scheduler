@@ -26,7 +26,7 @@ public class SRTF {
     private void getProcesses() {
         int arrivalTime = 0;
 
-        File file = new File("src/job1.txt");
+        File file = new File("src/test1.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
@@ -112,15 +112,31 @@ public class SRTF {
             System.out.print("-----");
         System.out.println();
         for (int i = 0; i <= ppp.size(); i++) {
-            if (i >= 10) {
-                System.out.print(i + "     ");
-            } else if (i >= 100) {
-                System.out.print(i + "    ");
-            } else if (i >= 1000) {
-                System.out.print(i + "   ");
-            } else {
-                System.out.print(i + "      ");
+            //for (int j=0;j< ppp.size();j++)
+            if (ppp.get(i).getPId().length() > 4){
+                if (i >= 10) {
+                    System.out.print(i + "      ");
+                } else if (i >= 100) {
+                    System.out.print(i + "     ");
+                } else if (i >= 1000) {
+                    System.out.print(i + "    ");
+                } else {
+                    System.out.print(i + "       ");
+                }
             }
+            else {
+                if (i >= 10) {
+                    System.out.print(i + "     ");
+                } else if (i >= 100) {
+                    System.out.print(i + "    ");
+                } else if (i >= 1000) {
+                    System.out.print(i + "   ");
+                } else {
+                    System.out.print(i + "      ");
+                }
+            }
+
+
             /*for (int j =0 ;j<7;j++)
                 System.out.print(" ");*/
         }
