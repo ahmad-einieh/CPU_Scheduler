@@ -15,8 +15,6 @@ public class Priority {
     }
 
     private void getProcesses() {
-        int arrivalTime = 0;
-
         File file = new File("src/job2.txt");
         BufferedReader br;
         try {
@@ -29,7 +27,7 @@ public class Priority {
 
                 int[] nums = getNums(br.readLine());
 
-                processes.add(new PriorityProc(pId, arrivalTime++, nums[1], nums[0]));
+                processes.add(new PriorityProc(pId, nums[1], nums[0]));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,11 +63,10 @@ public class Priority {
                 break;
 
             int finishT = time + proc.getBurstT();
+            proc.setWaitingT(time);
+            proc.setCompletionT(finishT);
 
             Job job = new Job(proc.getPId(), time, finishT);
-            proc.setWaitingT(finishT-proc.getBurstT());
-            proc.setCompletionT(finishT-time);
-
             timeline.add(job);
 
             proc.setDone(true);

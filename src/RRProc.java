@@ -6,6 +6,8 @@ public class RRProc {
     private int remainingT;
     private int completeTime;
     private boolean dispatched;
+    private int waitingT;
+    private int completionT;
 
     public RRProc(String pId, int arrivalT, int burstT) {
         this.pId = pId;
@@ -16,12 +18,6 @@ public class RRProc {
         this.dispatched = false;
     }
 
-
-
-   /* public void setArrivalT(int arrivalT) {
-        this.arrivalT = arrivalT;
-    }
-*/
     public String getPId() {
         return pId;
     }
@@ -66,13 +62,33 @@ public class RRProc {
         return this.dispatched;
     }
 
+    public int getWaitingT() {
+        return waitingT;
+    }
+
+    public void setWaitingT(int waitingT) {
+        this.waitingT = waitingT;
+    }
+
+    public int getCompletionT() {
+        return completionT;
+    }
+
+    public void setCompletionT(int completionT) {
+        this.completionT = completionT;
+    }
+
     @Override
     public String toString() {
-        return "RR Process{" +
+        return "RRProc{" +
                 "pId='" + pId + '\'' +
                 ", arrivalT=" + arrivalT +
                 ", burstT=" + burstT +
                 ", remainingT=" + remainingT +
+                ", completeTime=" + completeTime +
+                ", dispatched=" + dispatched +
+                ", waitingT=" + waitingT +
+                ", completionT=" + completionT +
                 '}';
     }
 }
