@@ -99,7 +99,7 @@ public class SRTF {
         }
         System.out.print(" |"+ppp.size()+"| ");*/
         for (int i = 0; i <= ppp.size(); i++)
-            System.out.print("-----");
+            System.out.print("------");
         System.out.print("\n| ");
 
         for (int i = 0; i < ppp.size(); i++) {
@@ -109,25 +109,25 @@ public class SRTF {
 
         System.out.println();
         for (int i = 0; i <= ppp.size(); i++)
-            System.out.print("-----");
+            System.out.print("------");
         System.out.println();
         for (int i = 0; i <= ppp.size(); i++) {
             //for (int j=0;j< ppp.size();j++)
-            if (ppp.get(i).getPId().length() > 4){
-                if (i >= 10) {
+
+            if (i < ppp.size() && ppp.get(i).getPId().length() > 4) {
+                if (i >= 10 && i < 100) {
                     System.out.print(i + "      ");
-                } else if (i >= 100) {
+                } else if (i >= 100 && i < 1000) {
                     System.out.print(i + "     ");
                 } else if (i >= 1000) {
                     System.out.print(i + "    ");
                 } else {
                     System.out.print(i + "       ");
                 }
-            }
-            else {
-                if (i >= 10) {
+            } else {
+                if (i >= 10 && i < 100) {
                     System.out.print(i + "     ");
-                } else if (i >= 100) {
+                } else if (i >= 100 && i < 1000) {
                     System.out.print(i + "    ");
                 } else if (i >= 1000) {
                     System.out.print(i + "   ");
