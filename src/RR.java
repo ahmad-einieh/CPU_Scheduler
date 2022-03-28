@@ -3,12 +3,12 @@ import java.util.LinkedList;
 
 public class RR {
 
-    private final int QUANTUM;
+    //private final int QUANTUM;
     private final LinkedList<RRProc> processes = new LinkedList<>();
     private final LinkedList<Job> timeline = new LinkedList<>();
 
     public RR(int quantum) {
-        QUANTUM = quantum;
+        //QUANTUM = quantum;
         getProcesses();
         schedule(quantum);
         //output();
@@ -26,7 +26,7 @@ public class RR {
     private void getProcesses() {
         int arrivalTime = 0;
 
-        File file = new File("src/test2.txt");
+        File file = new File("src/test3.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));

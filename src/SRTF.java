@@ -26,7 +26,7 @@ public class SRTF {
     private void getProcesses() {
         int arrivalTime = 0;
 
-        File file = new File("src/test1.txt");
+        File file = new File("src/job1.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
@@ -46,8 +46,7 @@ public class SRTF {
     }
 
     private void schedule() {
-        OutputStreamWriter osw = new OutputStreamWriter(System.out);
-        PrintWriter out = new PrintWriter(osw);
+
         ArrayList<SRTFProc> ppp = new ArrayList<>();
 
         int clock = 0;
@@ -98,8 +97,8 @@ public class SRTF {
             System.out.print(ppp.get(i).getPId());
         }
         System.out.print(" |"+ppp.size()+"| ");*/
-        for (int i = 0; i <= ppp.size(); i++)
-            System.out.print("------");
+        for (int i = 0; i < ppp.size() * 2; i++)
+            System.out.print("----");
         System.out.print("\n| ");
 
         for (int i = 0; i < ppp.size(); i++) {
@@ -108,8 +107,8 @@ public class SRTF {
         }
 
         System.out.println();
-        for (int i = 0; i <= ppp.size(); i++)
-            System.out.print("------");
+        for (int i = 0; i < ppp.size() * 2; i++)
+            System.out.print("----");
         System.out.println();
         for (int i = 0; i <= ppp.size(); i++) {
             //for (int j=0;j< ppp.size();j++)
@@ -145,24 +144,21 @@ public class SRTF {
         int averageCompleteTime = 0;
         int averageWaitingTime = 0;
         //out.println("/////////////////// SRTF OUTPUT ////////////////////");
-        out.println("PID\t   Completion_Time\t   Waiting_Time");
-
+        System.out.println("PID\t   Completion_Time\t   Waiting_Time");
         for (SRTFProc p : processes) {
             averageCompleteTime += p.getCompleteTime();
-            out.print(p.getPId());
-            out.print("\t\t");
-            out.print(p.getCompleteTime());
-            out.print("\t\t\t\t");
+            System.out.print(p.getPId());
+            System.out.print("\t\t");
+            System.out.print(p.getCompleteTime());
+            System.out.print("\t\t\t\t");
             //out.print(p.getArrivalT()+"\t");
             var x = (p.getCompleteTime() - p.getArrivalT()) - p.getBurstT();
             averageWaitingTime += x;
-            out.println(x);
+            System.out.println(x);
             //out.println(" units");
         }
-        out.println("average complete time = " + (double) averageCompleteTime / processes.size());
-        out.println("average waiting time = " + (double) averageWaitingTime / processes.size());
-
-        out.close();
+        System.out.println("average complete time = " + (double) averageCompleteTime / processes.size());
+        System.out.println("average waiting time = " + (double) averageWaitingTime / processes.size());
     }
 
 
