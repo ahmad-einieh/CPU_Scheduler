@@ -16,6 +16,12 @@ public class RRProc {
         this.dispatched = false;
     }
 
+
+
+   /* public void setArrivalT(int arrivalT) {
+        this.arrivalT = arrivalT;
+    }
+*/
     public String getPId() {
         return pId;
     }

@@ -39,6 +39,7 @@ public class RR {
 
                 processes.add(new RRProc(pId, arrivalTime++, burstTime));
             }
+            //processes.get(processes.size() - 1).setArrivalT(processes.get(processes.size() - 1).getArrivalT() + 1);
             //display();
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,6 +47,7 @@ public class RR {
     }
 
     private void schedule(int q) {
+        //processes.get(processes.size()-1).inAT();
         OutputStreamWriter osw = new OutputStreamWriter(System.out);
         PrintWriter out = new PrintWriter(osw);
         LinkedList<RRProc> queue = new LinkedList<>();
@@ -85,8 +87,8 @@ public class RR {
             out.print(p.getPId());
             out.print("\t");
             out.print(p.getCompleteTime());
-            out.print("   "+(p.getCompleteTime()-p.getArrivalT()));
-            out.print("   "+((p.getCompleteTime()-p.getArrivalT())-p.getBurstT()));
+            out.print("   " + (p.getCompleteTime() - p.getArrivalT()));
+            out.print("   " + ((p.getCompleteTime() - p.getArrivalT()) - p.getBurstT()));
             out.println();
             //out.println(" units");
         }
