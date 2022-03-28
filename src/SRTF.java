@@ -50,14 +50,11 @@ public class SRTF {
         ArrayList<SRTFProc> ppp = new ArrayList<>();
 
         int clock = 0;
-        //int quantum = 1;
 
         while (!checkCompleted(processes)) {
-            // Detect shortest burst process which
-            // has not completed
+
             SRTFProc minBurstProc = null;
             int minBurst = Integer.MAX_VALUE;
-            //System.out.println(minBurst);
 
             for (SRTFProc p : processes) {
                 if (!p.isCompleted() && p.getArrivalT() <= clock && p.getRemainingT() < minBurst) {
@@ -70,20 +67,6 @@ public class SRTF {
 
             if (minBurstProc != null) {
                 ppp.add(minBurstProc);
-                //System.out.println(minBurstProc.getPId());
-                /*for (int i = 0; i < ppp.size(); i++) {
-                    System.out.print(" |"+i+"| ");
-                    System.out.print(ppp.get(i).getPId());
-                    *//*if (i == ppp.size() - 1) {
-                        System.out.print(" |"+i+"| ");
-                        System.out.print(ppp.get(i).getPId());
-                    } else {
-                        System.out.print(" |"+i+"| ");
-                        System.out.print(ppp.get(i).getPId() *//**//*+ " -> "*//**//*);
-                    }*//*
-                }
-                System.out.print(" |"+ppp.size()+"| ");
-                System.out.println();*/
                 minBurstProc.reduceRemainingT(1);
 
                 if (minBurstProc.getRemainingT() == 0) {
@@ -92,11 +75,6 @@ public class SRTF {
             }
         }
 
-        /*for (int i = 0; i < ppp.size(); i++) {
-            System.out.print(" |"+i+"| ");
-            System.out.print(ppp.get(i).getPId());
-        }
-        System.out.print(" |"+ppp.size()+"| ");*/
         for (int i = 0; i < ppp.size() * 2; i++)
             System.out.print("----");
         System.out.print("\n| ");
@@ -111,8 +89,6 @@ public class SRTF {
             System.out.print("----");
         System.out.println();
         for (int i = 0; i <= ppp.size(); i++) {
-            //for (int j=0;j< ppp.size();j++)
-
             if (i < ppp.size() && ppp.get(i).getPId().length() > 4) {
                 if (i >= 10 && i < 100) {
                     System.out.print(i + "      ");
@@ -135,9 +111,6 @@ public class SRTF {
                 }
             }
 
-
-            /*for (int j =0 ;j<7;j++)
-                System.out.print(" ");*/
         }
 
         System.out.println();
@@ -155,7 +128,6 @@ public class SRTF {
             var x = (p.getCompleteTime() - p.getArrivalT()) - p.getBurstT();
             averageWaitingTime += x;
             System.out.println(x);
-            //out.println(" units");
         }
         System.out.println("average complete time = " + (double) averageCompleteTime / processes.size());
         System.out.println("average waiting time = " + (double) averageWaitingTime / processes.size());

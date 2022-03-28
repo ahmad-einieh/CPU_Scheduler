@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class RR {
@@ -26,7 +27,7 @@ public class RR {
     private void getProcesses() {
         int arrivalTime = 0;
 
-        File file = new File("src/test3.txt");
+        File file = new File("src/job1.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
@@ -39,34 +40,31 @@ public class RR {
 
                 processes.add(new RRProc(pId, arrivalTime++, burstTime));
             }
-            //processes.get(processes.size() - 1).setArrivalT(processes.get(processes.size() - 1).getArrivalT() + 1);
-            //display();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void schedule(int q) {
-        //processes.get(processes.size()-1).inAT();
-        OutputStreamWriter osw = new OutputStreamWriter(System.out);
-        PrintWriter out = new PrintWriter(osw);
+    private void schedule(int quantum) {
+
         LinkedList<RRProc> queue = new LinkedList<>();
+        ArrayList<RRProc> ppp = new ArrayList<>();
+
         int clock = 0;
-        //int quantum = q;
 
         while (!checkCompleted(processes)) {
-            // Pop first process in the queue
             RRProc fp = null;
             if (queue.size() > 0) {
                 fp = queue.poll();
-                fp.reduceRemainingTime(q);
+                ppp.add(fp);
+                fp.reduceRemainingTime(quantum);
 
                 if (fp.getRemainingT() == 0) {
                     fp.setCompleteTime(clock);
                 }
             }
 
-            // Check for new arrivals
             for (RRProc p : processes) {
                 if (!p.isDispatched() && p.getArrivalT() <= clock) {
                     p.setDispatched();
@@ -80,20 +78,56 @@ public class RR {
 
             clock++;
         }
+        for (int i = 0; i < ppp.size() * 2; i++)
+            System.out.print("----");
+        System.out.print("\n| ");
 
-        out.println("PID\tCompletion Time");
-
-        for (RRProc p : processes) {
-            out.print(p.getPId());
-            out.print("\t");
-            out.print(p.getCompleteTime());
-            out.print("   " + (p.getCompleteTime() - p.getArrivalT()));
-            out.print("   " + ((p.getCompleteTime() - p.getArrivalT()) - p.getBurstT()));
-            out.println();
-            //out.println(" units");
+        for (int i = 0; i < ppp.size(); i++) {
+            System.out.print(ppp.get(i).getPId());
+            System.out.print(" | ");
         }
 
-        out.close();
+        System.out.println();
+        for (int i = 0; i < ppp.size() * 2; i++)
+            System.out.print("----");
+        System.out.println();
+        for (int i = 0; i <= ppp.size() * quantum; i+=quantum) {
+            if (i < ppp.size() && ppp.get(i).getPId().length() > 4) {
+                if (i >= 10 && i < 100) {
+                    System.out.print(i + "      ");
+                } else if (i >= 100 && i < 1000) {
+                    System.out.print(i + "     ");
+                } else if (i >= 1000) {
+                    System.out.print(i + "    ");
+                } else {
+                    System.out.print(i + "       ");
+                }
+            } else {
+                if (i >= 10 && i < 100) {
+                    System.out.print(i + "     ");
+                } else if (i >= 100 && i < 1000) {
+                    System.out.print(i + "    ");
+                } else if (i >= 1000) {
+                    System.out.print(i + "   ");
+                } else {
+                    System.out.print(i + "      ");
+                }
+            }
+
+        }
+
+
+        System.out.println();
+        System.out.println("PID\tCompletion_Time");
+
+        for (RRProc p : processes) {
+            System.out.print(p.getPId());
+            System.out.print("\t");
+            System.out.print(p.getCompleteTime());
+            System.out.print("   " + (p.getCompleteTime() - p.getArrivalT()));
+            System.out.print("   " + ((p.getCompleteTime() - p.getArrivalT()) - p.getBurstT()));
+            System.out.println();
+        }
     }
 
     private void display() {
@@ -105,7 +139,6 @@ public class RR {
     /*private void output() {
         System.out.println("/////////////////// RR OUTPUT ////////////////////");
 
-        //TODO
     }*/
 
     public static void main(String[] args) {
