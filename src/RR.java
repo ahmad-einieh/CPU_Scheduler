@@ -14,7 +14,7 @@ public class RR {
         QUANTUM = quantum;
         getProcesses();
         schedule(quantum);
-        output();
+        //output();
     }
 
     private static boolean checkCompleted(LinkedList<RRProc> parr) {
