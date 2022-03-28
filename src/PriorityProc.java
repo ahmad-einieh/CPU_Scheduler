@@ -1,4 +1,4 @@
-public class PriorityProc {
+public class PriorityProc implements Comparable<PriorityProc> {
 
     private final String pId;
     private final int arrivalT;
@@ -14,6 +14,8 @@ public class PriorityProc {
         this.priority = priority;
         this.burstT = burstT;
     }
+
+
 
     public String getPId() {
         return pId;
@@ -66,5 +68,10 @@ public class PriorityProc {
                 ", completionT=" + completionT +
                 ", done=" + done +
                 '}';
+    }
+
+    @Override
+    public int compareTo(PriorityProc o) {
+        return Integer.compare(priority, o.priority);
     }
 }
