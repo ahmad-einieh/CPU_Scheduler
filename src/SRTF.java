@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class SRTF {
 
     private final LinkedList<SRTFProc> processes = new LinkedList<>();
-    private final LinkedList<Job> timeline = new LinkedList<>();
+    //private final LinkedList<Job> timeline = new LinkedList<>();
 
     public SRTF() {
         getProcesses();
@@ -72,14 +72,19 @@ public class SRTF {
             if (minBurstProc != null) {
                 ppp.add(minBurstProc);
                 //System.out.println(minBurstProc.getPId());
-                for (int i = 0; i < ppp.size(); i++) {
-                    if (i == ppp.size() - 1) {
+                /*for (int i = 0; i < ppp.size(); i++) {
+                    System.out.print(" |"+i+"| ");
+                    System.out.print(ppp.get(i).getPId());
+                    *//*if (i == ppp.size() - 1) {
+                        System.out.print(" |"+i+"| ");
                         System.out.print(ppp.get(i).getPId());
                     } else {
-                        System.out.print(ppp.get(i).getPId() + " -> ");
-                    }
+                        System.out.print(" |"+i+"| ");
+                        System.out.print(ppp.get(i).getPId() *//**//*+ " -> "*//**//*);
+                    }*//*
                 }
-                System.out.println();
+                System.out.print(" |"+ppp.size()+"| ");
+                System.out.println();*/
                 minBurstProc.reduceRemainingT(1);
 
                 if (minBurstProc.getRemainingT() == 0) {
@@ -88,6 +93,39 @@ public class SRTF {
             }
         }
 
+        /*for (int i = 0; i < ppp.size(); i++) {
+            System.out.print(" |"+i+"| ");
+            System.out.print(ppp.get(i).getPId());
+        }
+        System.out.print(" |"+ppp.size()+"| ");*/
+        for (int i = 0; i <= ppp.size(); i++)
+            System.out.print("-----");
+        System.out.print("\n| ");
+
+        for (int i = 0; i < ppp.size(); i++) {
+            System.out.print(ppp.get(i).getPId());
+            System.out.print(" | ");
+        }
+
+        System.out.println();
+        for (int i = 0; i <= ppp.size(); i++)
+            System.out.print("-----");
+        System.out.println();
+        for (int i = 0; i <= ppp.size(); i++) {
+            if (i >= 10) {
+                System.out.print(i + "     ");
+            } else if (i >= 100) {
+                System.out.print(i + "    ");
+            } else if (i >= 1000) {
+                System.out.print(i + "   ");
+            } else {
+                System.out.print(i + "      ");
+            }
+            /*for (int j =0 ;j<7;j++)
+                System.out.print(" ");*/
+        }
+
+        System.out.println();
         int averageCompleteTime = 0;
         int averageWaitingTime = 0;
         //out.println("/////////////////// SRTF OUTPUT ////////////////////");
@@ -105,8 +143,8 @@ public class SRTF {
             out.println(x);
             //out.println(" units");
         }
-        out.println("average complete time = " +(double) averageCompleteTime / processes.size());
-        out.println("average waiting time = " +(double) averageWaitingTime / processes.size());
+        out.println("average complete time = " + (double) averageCompleteTime / processes.size());
+        out.println("average waiting time = " + (double) averageWaitingTime / processes.size());
 
         out.close();
     }
