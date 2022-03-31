@@ -6,7 +6,6 @@ public class RRProc {
     private int remainingT;
     private int completeTime;
     private boolean dispatched;
-    private int finishTime;
 
     public RRProc(String pId, int arrivalT, int burstT) {
         this.pId = pId;
@@ -15,14 +14,14 @@ public class RRProc {
         remainingT = burstT;
         this.completeTime = -1;
         this.dispatched = false;
-        finishTime = 0;
     }
 
 
-    /* public void setArrivalT(int arrivalT) {
-         this.arrivalT = arrivalT;
-     }
- */
+
+   /* public void setArrivalT(int arrivalT) {
+        this.arrivalT = arrivalT;
+    }
+*/
     public String getPId() {
         return pId;
     }
@@ -65,14 +64,6 @@ public class RRProc {
 
     public boolean isDispatched() {
         return this.dispatched;
-    }
-
-    public int getFinishTime() {
-        return finishTime;
-    }
-
-    public void setFinishTime(int finishTime) {
-        this.finishTime = finishTime;
     }
 
     @Override

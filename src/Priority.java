@@ -15,8 +15,6 @@ public class Priority {
     }
 
     private void getProcesses() {
-        int arrivalTime = 0;
-
         File file = new File("src/job2.txt");
         BufferedReader br;
         try {
@@ -29,7 +27,7 @@ public class Priority {
 
                 int[] nums = getNums(br.readLine());
 
-                processes.add(new PriorityProc(pId, arrivalTime++, nums[1], nums[0]));
+                processes.add(new PriorityProc(pId, nums[1], nums[0]));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,12 +38,18 @@ public class Priority {
         int burstT, priority, counter = 0;
         StringBuilder strBurstT = new StringBuilder();
 
-        while (line.charAt(counter) != '\t')
-            strBurstT.append(line.charAt(counter++));
-        counter++;
+        while (true) {
+            char c = line.charAt(counter++);
+            try {
+                Integer.parseInt(String.valueOf(c));
+                strBurstT.append(c);
+            } catch (NumberFormatException e) {
+                break;
+            }
+        }
 
         burstT = Integer.parseInt(strBurstT.toString());
-        priority = Integer.parseInt(String.valueOf(line.charAt(counter)));
+        priority = Integer.parseInt(String.valueOf(line.charAt(line.length()-1)));
         return new int[]{burstT, priority};
     }
 
@@ -53,17 +57,16 @@ public class Priority {
         int time = 0;
         PriorityProc proc;
         while (true) {
-            proc = getHighest();
+            proc = getNext();
 
             if (proc == null)
                 break;
 
             int finishT = time + proc.getBurstT();
+            proc.setWaitingT(time);
+            proc.setCompletionT(finishT);
 
             Job job = new Job(proc.getPId(), time, finishT);
-            proc.setWaitingT(finishT-proc.getBurstT());
-            proc.setCompletionT(finishT-time);
-
             timeline.add(job);
 
             proc.setDone(true);
@@ -72,19 +75,19 @@ public class Priority {
         }
     }
 
-    private PriorityProc getHighest() {
-        int hPriority = 0;
-        int hProc = -1;
+    private PriorityProc getNext() {
+        int targetPriority = 5;
+        int targetProc = -1;
         for (int i = 0; i < processes.size(); i++) {
-            if (processes.get(i).getPriority() > hPriority && !processes.get(i).isDone()) {
-                hProc = i;
-                hPriority = processes.get(i).getPriority();
+            if (processes.get(i).getPriority() < targetPriority && !processes.get(i).isDone()) {
+                targetProc = i;
+                targetPriority = processes.get(i).getPriority();
             }
         }
-        if (hProc == -1)
+        if (targetProc == -1)
             return null;
         else
-            return processes.get(hProc);
+            return processes.get(targetProc);
     }
 
     private void output() {
@@ -117,20 +120,24 @@ public class Priority {
         for (int i = 0; i < fullL; i++)
             System.out.print("---");
 
+        int margin = 0;
         System.out.print("\n0");
         for (int i = 0; i < timeline.size(); i++) {
-            for (int j = 0; j < ls.get(i)*2+4; j++)
+            int times = ls.get(i) * 2 + timeline.get(i).getPId().length() - margin;
+            for (int j = 0; j < times; j++)
                 System.out.print(" ");
 
-            System.out.print(timeline.get(i).getEndT());
+            int endT = timeline.get(i).getEndT();
+            System.out.print(endT);
+
+            if (endT > 9)
+                margin = String.valueOf(endT).length()-1;
         }
 
         System.out.println("\n");
-        for (PriorityProc proc : processes) {
-            System.out.println(proc.getPId() + ":-");
-            System.out.println("Waiting Time: " + proc.getWaitingT());
-            System.out.println("Completion Time: " + proc.getCompletionT());
-        }
+        System.out.println("PID\t\t\tWaiting Time\t\tCompletion Time");
+        for (PriorityProc proc : processes)
+            System.out.println(proc.getPId() + "\t\t\t" + proc.getWaitingT() + "\t\t\t\t\t" + proc.getCompletionT());
         System.out.println();
 
         int sumWT = 0, sumCT = 0;
@@ -139,8 +146,8 @@ public class Priority {
             sumCT += process.getCompletionT();
         }
 
-        System.out.println("Average Waiting Time: " + 1.0 * sumWT / processes.size());
-        System.out.println("Average Completion Time: " + 1.0 * sumCT / processes.size());
+        System.out.printf("Average Waiting Time: %.2f%n", 1.0 * sumWT / processes.size());
+        System.out.printf("Average Completion Time: %.2f%n", 1.0 * sumCT / processes.size());
     }
 
     public static void main(String[] args) {

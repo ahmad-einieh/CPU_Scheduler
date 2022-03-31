@@ -9,7 +9,6 @@ public class SRTF {
 
     public SRTF() {
         getProcesses();
-        //display();
         schedule();
         //output();
     }
@@ -46,7 +45,6 @@ public class SRTF {
     }
 
     private void schedule() {
-
         ArrayList<SRTFProc> ppp = new ArrayList<>();
 
         int clock = 0;
@@ -63,7 +61,7 @@ public class SRTF {
                 }
             }
 
-            clock = clock + 1;
+            clock++;
 
             if (minBurstProc != null) {
                 ppp.add(minBurstProc);
@@ -129,18 +127,12 @@ public class SRTF {
             averageWaitingTime += x;
             System.out.println(x);
         }
-        System.out.println("average complete time = " + (double) averageCompleteTime / processes.size());
-        System.out.println("average waiting time = " + (double) averageWaitingTime / processes.size());
-    }
 
-
-    private void display() {
-        System.out.println("SRTF Processes are:");
-        for (SRTFProc process : processes)
-            System.out.println(process);
+        System.out.printf("\nAverage Waiting Time: %.2f%n", 1.0 * averageWaitingTime / processes.size());
+        System.out.printf("Average Completion Time: %.2f%n", 1.0 * averageCompleteTime / processes.size());
     }
 
     public static void main(String[] args) {
-        SRTF srt = new SRTF();
+        new SRTF();
     }
 }

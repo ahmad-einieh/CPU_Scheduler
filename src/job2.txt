@@ -1,10 +1,16 @@
 [Begin of job.txt]
-Job1
-5	3
-Job2
-3	4
-Job3
-8	3
-Job4
-6	1
+Job101
+7, 3
+Job102
+4,1
+Job103
+14,4
+Job104
+19,2
+Job105
+2,4
+Job106
+5,1
+Job107
+15,2
 [End of job.txt]
