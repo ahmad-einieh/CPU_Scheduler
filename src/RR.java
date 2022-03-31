@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Queue;
 
 public class RR {
 
@@ -49,14 +50,15 @@ public class RR {
     private void schedule(int quantum) {
 
         LinkedList<RRProc> queue = new LinkedList<>();
-        ArrayList<RRProc> ppp = new ArrayList<>();
-
+        LinkedList<RRProc> ppp = new LinkedList<>();
         int clock = 0;
 
         while (!checkCompleted(processes)) {
             RRProc fp = null;
+            System.out.println(queue);
             if (queue.size() > 0) {
                 fp = queue.poll();
+                fp.setFinishTime(clock);
                 ppp.add(fp);
                 fp.reduceRemainingTime(quantum);
 
@@ -77,7 +79,9 @@ public class RR {
             }
 
             clock++;
+
         }
+
         for (int i = 0; i < ppp.size() * 2; i++)
             System.out.print("----");
         System.out.print("\n| ");
@@ -91,35 +95,11 @@ public class RR {
         for (int i = 0; i < ppp.size() * 2; i++)
             System.out.print("----");
         System.out.println();
-        for (int i = 0; i <= ppp.size() * quantum; i+=quantum) {
-            if (i < ppp.size() && ppp.get(i).getPId().length() > 4) {
-                if (i >= 10 && i < 100) {
-                    System.out.print(i + "      ");
-                } else if (i >= 100 && i < 1000) {
-                    System.out.print(i + "     ");
-                } else if (i >= 1000) {
-                    System.out.print(i + "    ");
-                } else {
-                    System.out.print(i + "       ");
-                }
-            } else {
-                if (i >= 10 && i < 100) {
-                    System.out.print(i + "     ");
-                } else if (i >= 100 && i < 1000) {
-                    System.out.print(i + "    ");
-                } else if (i >= 1000) {
-                    System.out.print(i + "   ");
-                } else {
-                    System.out.print(i + "      ");
-                }
-            }
-
-        }
 
 
-        System.out.println();
+
+
         System.out.println("PID\tCompletion_Time");
-
         for (RRProc p : processes) {
             System.out.print(p.getPId());
             System.out.print("\t");
