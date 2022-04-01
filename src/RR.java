@@ -1,130 +1,83 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class RR {
 
     private final int QUANTUM;
-    private final LinkedList<RRProc> processes = new LinkedList<>();
+    private final LinkedList<PCB> processes = new LinkedList<>();
     private final LinkedList<Job> timeline = new LinkedList<>();
 
     public RR(int quantum) {
         QUANTUM = quantum;
         getProcesses();
-        schedule(quantum);
-        //output();
-    }
-
-    private static boolean checkCompleted(LinkedList<RRProc> parr) {
-        for (RRProc p : parr) {
-            if (!p.isCompleted())
-                return false;
-        }
-        return true;
+        schedule();
+        Main.output(processes, timeline, "RR");
     }
 
     private void getProcesses() {
-        int arrivalTime = 0;
-
         File file = new File("src/job1.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
             br.readLine();  // the start line which we don't want
+            int arrivalT = 0;
             while (true) {
                 String pId = br.readLine();
                 if (pId.equals("[End of job.txt]"))
                     break;
                 int burstTime = Integer.parseInt(br.readLine());
 
-                processes.add(new RRProc(pId, arrivalTime++, burstTime));
+                processes.add(new PCB(pId, burstTime, arrivalT++, 0));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void schedule2() {
+    private void schedule() {
+        Queue<PCB> queue = new LinkedList<>(processes);
+        int time = 0;
 
-    }
+        while (!queue.isEmpty()) {
+            PCB proc = queue.poll();
+            int finishT;
 
-    private void schedule(int quantum) {
-        LinkedList<RRProc> queue = new LinkedList<>();
-        LinkedList<RRProc> ppp = new LinkedList<>();
-        int clock = 0;
-
-        while (!checkCompleted(processes)) {
-            RRProc fp = null;
-            System.out.println(queue);
-            if (queue.size() > 0) {
-                fp = queue.poll();
-                fp.setFinishTime(clock);
-                ppp.add(fp);
-                fp.reduceRemainingTime(quantum);
-
-                if (fp.getRemainingT() == 0) {
-                    fp.setCompleteTime(clock);
-                }
+            if (proc.getRemainingT() > QUANTUM) {
+                finishT = time + QUANTUM;
+                proc.setRemainingT(proc.getRemainingT() - QUANTUM);
+                queue.add(proc);
+            }
+            else if (proc.getRemainingT() == QUANTUM) {
+                finishT = time + QUANTUM;
+                proc.setWaitingT(finishT - proc.getBurstT());
+                proc.setCompletionT(finishT);
+            }
+            else {
+                finishT = time + proc.getRemainingT();
+                proc.setWaitingT(finishT - proc.getBurstT());
+                proc.setCompletionT(finishT);
             }
 
-            for (RRProc p : processes) {
-                if (!p.isDispatched() && p.getArrivalT() <= clock) {
-                    p.setDispatched();
-                    queue.add(p);
-                }
-            }
-
-            if (fp != null && !fp.isCompleted()) {
-                queue.add(fp);
-            }
-
-            clock++;
-
-        }
-
-        for (int i = 0; i < ppp.size() * 2; i++)
-            System.out.print("----");
-        System.out.print("\n| ");
-
-        for (int i = 0; i < ppp.size(); i++) {
-            System.out.print(ppp.get(i).getPId());
-            System.out.print(" | ");
-        }
-
-        System.out.println();
-        for (int i = 0; i < ppp.size() * 2; i++)
-            System.out.print("----");
-        System.out.println();
-
-
-
-
-        System.out.println("PID\tCompletion_Time");
-        for (RRProc p : processes) {
-            System.out.print(p.getPId());
-            System.out.print("\t");
-            System.out.print(p.getCompleteTime());
-            System.out.print("   " + (p.getCompleteTime() - p.getArrivalT()));
-            System.out.print("   " + ((p.getCompleteTime() - p.getArrivalT()) - p.getBurstT()));
-            System.out.println();
+            timeline.add(new Job(proc.getPId(), time, finishT));
+            time = finishT;
         }
     }
 
     private void output() {
-        int fullL = 0;
+        int fullL = 1;
         LinkedList<Integer> ls = new LinkedList<>();
         for (Job job : timeline) {
             int l = job.getEndT() - job.getStartT();
             ls.add(l);
-            fullL += l;
+            fullL += 2 * l + job.getPId().length() + 1;
         }
 
-        System.out.println("\n/////////////////// RR OUTPUT ////////////////////\n");
+        System.out.println("\n\n/////////////////// RR OUTPUT ////////////////////\n");
         for (int i = 0; i < fullL; i++)
-            System.out.print("---");
+            System.out.print("-");
         System.out.print("\n|");
 
         for (int i = 0; i < timeline.size(); i++) {
@@ -141,7 +94,7 @@ public class RR {
 
         System.out.println();
         for (int i = 0; i < fullL; i++)
-            System.out.print("---");
+            System.out.print("-");
 
         int margin = 0;
         System.out.print("\n0");
@@ -159,12 +112,12 @@ public class RR {
 
         System.out.println("\n");
         System.out.println("PID\t\t\tWaiting Time\t\tCompletion Time");
-        for (RRProc proc : processes)
+        for (PCB proc : processes)
             System.out.println(proc.getPId() + "\t\t\t" + proc.getWaitingT() + "\t\t\t\t\t" + proc.getCompletionT());
         System.out.println();
 
         int sumWT = 0, sumCT = 0;
-        for (RRProc process : processes) {
+        for (PCB process : processes) {
             sumWT += process.getWaitingT();
             sumCT += process.getCompletionT();
         }
@@ -174,6 +127,6 @@ public class RR {
     }
 
     public static void main(String[] args) {
-        RR r = new RR(1);
+        new RR(5);
     }
 }
