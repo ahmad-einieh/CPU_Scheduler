@@ -73,6 +73,8 @@ public class SRTF {
             }
         }
 
+        System.out.println("\n/////////////////// SRTF OUTPUT ////////////////////\n");
+
         for (int i = 0; i < ppp.size() * 2; i++)
             System.out.print("----");
         System.out.print("\n| ");
@@ -111,10 +113,9 @@ public class SRTF {
 
         }
 
-        System.out.println();
+        System.out.println("\n");
         int averageCompleteTime = 0;
         int averageWaitingTime = 0;
-        //out.println("/////////////////// SRTF OUTPUT ////////////////////");
         System.out.println("PID\t   Completion_Time\t   Waiting_Time");
         for (SRTFProc p : processes) {
             averageCompleteTime += p.getCompleteTime();
