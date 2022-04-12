@@ -7,6 +7,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         int quantum = sc.nextInt();
 
+        System.out.print("\n\n/////////////////// SRTF OUTPUT ////////////////////\n\n");
         new SRTF();
         new Priority();
         new RR(quantum);

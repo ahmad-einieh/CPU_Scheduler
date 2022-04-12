@@ -10,7 +10,7 @@ public class SRTF {
     public SRTF() {
         getProcesses();
         schedule();
-        //output();
+        //Main.output(processes, timeline, "SRTF");
     }
 
     private static boolean checkCompleted(LinkedList<SRTFProc> parr) {
