@@ -1,6 +1,6 @@
+import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.*;
 
 public class SRTF {
 
@@ -25,24 +25,60 @@ public class SRTF {
     private void getProcesses() {
         int arrivalTime = 0;
 
-        File file = new File("src/job1.txt");
-        BufferedReader br;
-        try {
-            br = new BufferedReader(new FileReader(file));
-            br.readLine();  // the start line which we don't want
-            while (true) {
-                String pId = br.readLine();
-                if (pId.equals("[End of job.txt]"))
-                    break;
-                int burstTime = Integer.parseInt(br.readLine());
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.showOpenDialog(new JFrame());
+        File inputFile = fileChooser.getSelectedFile();
+        System.out.println("Selected file : " + inputFile.getAbsolutePath());
 
-                processes.add(new SRTFProc(pId, arrivalTime++, burstTime));
+        Scanner sc = new Scanner(System.in);
+        System.out.print("enter type of text file: 1 to new type : ");
+        var x = sc.nextInt();
+        if (x == 1) {
+            File file = new File(String.valueOf(inputFile));
+            BufferedReader br;
+            try {
+                br = new BufferedReader(new FileReader(file));
+                while (true) {
+                    String line = br.readLine();
+                    if (line.equals("//PID,AT,BT\t(AT: Arrival Time, BT: Burst Time)"))
+                        break;
+                    String[] info = line.split(",");
+                    processes.add(new SRTFProc(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2])));
+                }
+                //processes.sort();
+                /*Collections.sort(processes, new Comparator<SRTFProc>() {
+                    @Override
+                    public int compare(SRTFProc o1, SRTFProc o2) {
+                        return o2.getArrivalT() - o1.getArrivalT();
+                    }
+                });*/
+                //display();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            //display();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            File file = new File("src/job1.txt");
+            BufferedReader br;
+            try {
+                br = new BufferedReader(new FileReader(file));
+                br.readLine();  // the start line which we don't want
+                while (true) {
+                    String pId = br.readLine();
+                    if (pId.equals("[End of job.txt]"))
+                        break;
+                    int burstTime = Integer.parseInt(br.readLine());
+
+                    processes.add(new SRTFProc(pId, arrivalTime++, burstTime));
+                }
+                //display();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
     }
+
 
     private void schedule() {
         ArrayList<SRTFProc> ppp = new ArrayList<>();
