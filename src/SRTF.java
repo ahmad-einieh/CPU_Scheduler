@@ -23,6 +23,24 @@ public class SRTF {
     }
 
     private void getProcesses() {
+
+        File file = new File("src/testdata1 for SRTF.txt");
+        BufferedReader br;
+        try {
+            br = new BufferedReader(new FileReader(file));
+            while (true) {
+                String line = br.readLine();
+                if (line.equals("//PID,AT,BT\t(AT: Arrival Time, BT: Burst Time)"))
+                    break;
+                String[] info = line.split(",");
+                processes.add(new SRTFProc(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2])));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getProcesses2() {
         int arrivalTime = 0;
 
         JFileChooser fileChooser = new JFileChooser();
@@ -45,15 +63,6 @@ public class SRTF {
                     String[] info = line.split(",");
                     processes.add(new SRTFProc(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2])));
                 }
-                //processes.sort();
-                /*Collections.sort(processes, new Comparator<SRTFProc>() {
-                    @Override
-                    public int compare(SRTFProc o1, SRTFProc o2) {
-                        return o2.getArrivalT() - o1.getArrivalT();
-                    }
-                });*/
-                //display();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
