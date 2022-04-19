@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SRTF {
 
-    private final LinkedList<SRTFProc> processes = new LinkedList<>();
+    private final LinkedList<PCB2> processes = new LinkedList<>();
     //private final LinkedList<Job> timeline = new LinkedList<>();
 
     public SRTF() {
@@ -13,8 +13,8 @@ public class SRTF {
         //Main.output(processes, timeline, "SRTF");
     }
 
-    private static boolean checkCompleted(LinkedList<SRTFProc> parr) {
-        for (SRTFProc p : parr) {
+    private static boolean checkCompleted(LinkedList<PCB2> parr) {
+        for (PCB2 p : parr) {
             if (!p.isCompleted()) {
                 return false;
             }
@@ -33,7 +33,7 @@ public class SRTF {
                 if (line.equals("//PID,AT,BT\t(AT: Arrival Time, BT: Burst Time)"))
                     break;
                 String[] info = line.split(",");
-                processes.add(new SRTFProc(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2])));
+                processes.add(new PCB2(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2])));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class SRTF {
                     if (line.equals("//PID,AT,BT\t(AT: Arrival Time, BT: Burst Time)"))
                         break;
                     String[] info = line.split(",");
-                    processes.add(new SRTFProc(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2])));
+                    processes.add(new PCB2(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2])));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -78,7 +78,7 @@ public class SRTF {
                         break;
                     int burstTime = Integer.parseInt(br.readLine());
 
-                    processes.add(new SRTFProc(pId, arrivalTime++, burstTime));
+                    processes.add(new PCB2(pId, arrivalTime++, burstTime));
                 }
                 //display();
             } catch (Exception e) {
@@ -90,16 +90,16 @@ public class SRTF {
 
 
     private void schedule() {
-        ArrayList<SRTFProc> ppp = new ArrayList<>();
+        ArrayList<PCB2> ppp = new ArrayList<>();
 
         int clock = 0;
 
         while (!checkCompleted(processes)) {
 
-            SRTFProc minBurstProc = null;
+            PCB2 minBurstProc = null;
             int minBurst = Integer.MAX_VALUE;
 
-            for (SRTFProc p : processes) {
+            for (PCB2 p : processes) {
                 if (!p.isCompleted() && p.getArrivalT() <= clock && p.getRemainingT() < minBurst) {
                     minBurst = p.getRemainingT();
                     minBurstProc = p;
@@ -162,7 +162,7 @@ public class SRTF {
         int averageCompleteTime = 0;
         int averageWaitingTime = 0;
         System.out.println("PID\t   Completion_Time\t   Waiting_Time");
-        for (SRTFProc p : processes) {
+        for (PCB2 p : processes) {
             averageCompleteTime += p.getCompleteTime();
             System.out.print(p.getPId());
             System.out.print("\t\t");

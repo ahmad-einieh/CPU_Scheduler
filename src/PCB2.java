@@ -1,4 +1,4 @@
-public class SRTFProc {
+public class PCB2 {
 
     private final String pId;
     private final int arrivalT;
@@ -7,7 +7,7 @@ public class SRTFProc {
     private int completeTime;
     private boolean dispatched;
 
-    public SRTFProc(String pId, int arrivalT, int burstT) {
+    public PCB2(String pId, int arrivalT, int burstT) {
         this.pId = pId;
         this.burstT = burstT;
         this.arrivalT = arrivalT;
