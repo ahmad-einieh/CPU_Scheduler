@@ -10,7 +10,6 @@ public class Job {
         this.endT = endT;
     }
 
-
     public String getPId() {
         return pId;
     }
