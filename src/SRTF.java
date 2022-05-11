@@ -1,6 +1,8 @@
-import javax.swing.*;
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class SRTF {
 
@@ -23,7 +25,6 @@ public class SRTF {
     }
 
     private void getProcesses() {
-
         File file = new File("src/testdata1 for SRTF.txt");
         BufferedReader br;
         try {
@@ -39,55 +40,6 @@ public class SRTF {
             e.printStackTrace();
         }
     }
-
-    private void getProcesses2() {
-        int arrivalTime = 0;
-
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.showOpenDialog(new JFrame());
-        File inputFile = fileChooser.getSelectedFile();
-        System.out.println("Selected file : " + inputFile.getAbsolutePath());
-
-        Scanner sc = new Scanner(System.in);
-        System.out.print("enter type of text file: 1 to new type : ");
-        var x = sc.nextInt();
-        if (x == 1) {
-            File file = new File(String.valueOf(inputFile));
-            BufferedReader br;
-            try {
-                br = new BufferedReader(new FileReader(file));
-                while (true) {
-                    String line = br.readLine();
-                    if (line.equals("//PID,AT,BT\t(AT: Arrival Time, BT: Burst Time)"))
-                        break;
-                    String[] info = line.split(",");
-                    processes.add(new PCB2(info[0], Integer.parseInt(info[1]), Integer.parseInt(info[2])));
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            File file = new File("src/job1.txt");
-            BufferedReader br;
-            try {
-                br = new BufferedReader(new FileReader(file));
-                br.readLine();  // the start line which we don't want
-                while (true) {
-                    String pId = br.readLine();
-                    if (pId.equals("[End of job.txt]"))
-                        break;
-                    int burstTime = Integer.parseInt(br.readLine());
-
-                    processes.add(new PCB2(pId, arrivalTime++, burstTime));
-                }
-                //display();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
 
     private void schedule() {
         ArrayList<PCB2> ppp = new ArrayList<>();
