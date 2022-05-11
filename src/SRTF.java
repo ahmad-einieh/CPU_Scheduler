@@ -15,15 +15,6 @@ public class SRTF {
         //Main.output(processes, timeline, "SRTF");
     }
 
-    private static boolean checkCompleted(LinkedList<PCB2> parr) {
-        for (PCB2 p : parr) {
-            if (!p.isCompleted()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private void getProcesses() {
         File file = new File("src/testdata1 for SRTF.txt");
         BufferedReader br;
@@ -45,9 +36,7 @@ public class SRTF {
         ArrayList<PCB2> ppp = new ArrayList<>();
 
         int clock = 0;
-
         while (!checkCompleted(processes)) {
-
             PCB2 minBurstProc = null;
             int minBurst = Integer.MAX_VALUE;
 
@@ -64,9 +53,8 @@ public class SRTF {
                 ppp.add(minBurstProc);
                 minBurstProc.reduceRemainingT(1);
 
-                if (minBurstProc.getRemainingT() == 0) {
+                if (minBurstProc.getRemainingT() == 0)
                     minBurstProc.setCompleteTime(clock);
-                }
             }
         }
 
@@ -76,8 +64,8 @@ public class SRTF {
             System.out.print("----");
         System.out.print("\n| ");
 
-        for (int i = 0; i < ppp.size(); i++) {
-            System.out.print(ppp.get(i).getPId());
+        for (PCB2 pcb2 : ppp) {
+            System.out.print(pcb2.getPId());
             System.out.print(" | ");
         }
 
@@ -87,27 +75,25 @@ public class SRTF {
         System.out.println();
         for (int i = 0; i <= ppp.size(); i++) {
             if (i < ppp.size() && ppp.get(i).getPId().length() > 4) {
-                if (i >= 10 && i < 100) {
+                if (i >= 10 && i < 100)
                     System.out.print(i + "   ");
-                } else if (i >= 100 && i < 1000) {
+                else if (i >= 100 && i < 1000)
                     System.out.print(i + "  ");
-                } else if (i >= 1000) {
+                else if (i >= 1000)
                     System.out.print(i + " ");
-                } else {
+                else
                     System.out.print(i + "    ");
-                }
-            } else {
-                if (i >= 10 && i < 100) {
-                    System.out.print(i + "  ");
-                } else if (i >= 100 && i < 1000) {
-                    System.out.print(i + " ");
-                } else if (i >= 1000) {
-                    System.out.print(i + "");
-                } else {
-                    System.out.print(i + "   ");
-                }
             }
-
+            else {
+                if (i >= 10 && i < 100)
+                    System.out.print(i + "  ");
+                else if (i >= 100 && i < 1000)
+                    System.out.print(i + " ");
+                else if (i >= 1000)
+                    System.out.print(i + "");
+                else
+                    System.out.print(i + "   ");
+            }
         }
 
         System.out.println("\n");
@@ -120,7 +106,6 @@ public class SRTF {
             System.out.print("\t\t");
             System.out.print(p.getCompleteTime());
             System.out.print("\t\t\t\t");
-            //out.print(p.getArrivalT()+"\t");
             var x = (p.getCompleteTime() - p.getArrivalT()) - p.getBurstT();
             averageWaitingTime += x;
             System.out.println(x);
@@ -130,7 +115,12 @@ public class SRTF {
         System.out.printf("Average Completion Time: %.2f%n", 1.0 * averageCompleteTime / processes.size());
     }
 
-    public static void main(String[] args) {
-        new SRTF();
+    private static boolean checkCompleted(LinkedList<PCB2> parr) {
+        for (PCB2 p : parr) {
+            if (!p.isCompleted())
+                return false;
+        }
+        return true;
     }
+
 }

@@ -66,7 +66,4 @@ public class RR {
         }
     }
 
-    public static void main(String[] args) {
-        new RR(5);
-    }
 }
