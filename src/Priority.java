@@ -9,6 +9,10 @@ public class Priority {
     private final LinkedList<PCB> processes = new LinkedList<>();
     private final LinkedList<Job> timeline = new LinkedList<>();
 
+    public static void main(String[] args) {
+        new Priority();
+    }
+
     public Priority() {
         getProcesses();
         schedule();
@@ -16,43 +20,28 @@ public class Priority {
     }
 
     private void getProcesses() {
-        File file = new File("src/job2.txt");
+        File file = new File("src/testdata1 for priortiy.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
-            br.readLine();  // the start line which we don't want
+
             int arrivalT = 0;
             while (true) {
                 String pId = br.readLine();
-                if (pId.equals("[End of job.txt]"))
+
+                if (pId == null)
                     break;
 
-                int[] nums = getNums(br.readLine());
+                String[] nums = br.readLine().split(",");
 
-                processes.add(new PCB(pId, nums[0], arrivalT++, nums[1]));
+                int burstT = Integer.parseInt(nums[0].strip());
+                int priority = Integer.parseInt(nums[1].strip());
+
+                processes.add(new PCB(pId, burstT, arrivalT++, priority));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private int[] getNums(String line) {
-        int burstT, priority, counter = 0;
-        StringBuilder strBurstT = new StringBuilder();
-
-        while (true) {
-            char c = line.charAt(counter++);
-            try {
-                Integer.parseInt(String.valueOf(c));
-                strBurstT.append(c);
-            } catch (NumberFormatException e) {
-                break;
-            }
-        }
-
-        burstT = Integer.parseInt(strBurstT.toString());
-        priority = Integer.parseInt(String.valueOf(line.charAt(line.length()-1)));
-        return new int[]{burstT, priority};
     }
 
     private void schedule() {

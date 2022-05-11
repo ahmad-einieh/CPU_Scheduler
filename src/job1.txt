@@ -1,4 +1,3 @@
-[Begin of job.txt]
 Job1
 5
 Job2
@@ -7,4 +6,3 @@ Job3
 8
 Job4
 6
-[End of job.txt]

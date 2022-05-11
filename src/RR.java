@@ -18,16 +18,18 @@ public class RR {
     }
 
     private void getProcesses() {
-        File file = new File("src/job1.txt");
+        File file = new File("src/testdata21 for RR.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
-            br.readLine();  // the start line which we don't want
+
             int arrivalT = 0;
             while (true) {
                 String pId = br.readLine();
-                if (pId.equals("[End of job.txt]"))
+
+                if (pId == null)
                     break;
+
                 int burstTime = Integer.parseInt(br.readLine());
 
                 processes.add(new PCB(pId, burstTime, arrivalT++, 0));
