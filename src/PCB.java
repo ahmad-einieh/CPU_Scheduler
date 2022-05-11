@@ -1,17 +1,17 @@
 public class PCB implements Comparable<PCB> {
 
     private final String pId;
-    private final int burstT;
     private final int arrivalT;
+    private final int burstT;
     private final int priority;
     private int remainingT;
     private int waitingT;
     private int completionT;
 
-    public PCB(String pId, int burstT, int arrivalT, int priority) {
+    public PCB(String pId, int arrivalT, int burstT, int priority) {
         this.pId = pId;
-        this.burstT = remainingT = burstT;
         this.arrivalT = arrivalT;
+        this.burstT = remainingT = burstT;
         this.priority = priority;
     }
 
@@ -19,12 +19,12 @@ public class PCB implements Comparable<PCB> {
         return pId;
     }
 
-    public int getBurstT() {
-        return burstT;
-    }
-
     public int getArrivalT() {
         return arrivalT;
+    }
+
+    public int getBurstT() {
+        return burstT;
     }
 
     public int getPriority() {
@@ -55,10 +55,15 @@ public class PCB implements Comparable<PCB> {
         this.completionT = completionT;
     }
 
+    public boolean isCompleted() {
+        return completionT != 0;
+    }
+
     @Override
     public String toString() {
         return "PCB{" +
                 "pId='" + pId + '\'' +
+                ", arrivalT=" + arrivalT +
                 ", burstT=" + burstT +
                 ", priority=" + priority +
                 ", remainingT=" + remainingT +

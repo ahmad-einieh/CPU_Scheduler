@@ -6,18 +6,15 @@ import java.util.Queue;
 
 public class RR {
 
-    private final int QUANTUM;
-    private final LinkedList<PCB> processes = new LinkedList<>();
-    private final LinkedList<Job> timeline = new LinkedList<>();
-
     public RR(int quantum) {
-        QUANTUM = quantum;
-        getProcesses();
-        schedule();
+        LinkedList<PCB> processes = getProcesses();
+        LinkedList<Job> timeline = schedule(processes, quantum);
         Main.output(processes, timeline, "RR");
     }
 
-    private void getProcesses() {
+    private LinkedList<PCB> getProcesses() {
+        LinkedList<PCB> processes = new LinkedList<>();
+
         File file = new File("src/testdata21 for RR.txt");
         BufferedReader br;
         try {
@@ -32,14 +29,17 @@ public class RR {
 
                 int burstTime = Integer.parseInt(br.readLine());
 
-                processes.add(new PCB(pId, burstTime, arrivalT++, 0));
+                processes.add(new PCB(pId, arrivalT++, burstTime, 0));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return processes;
     }
 
-    private void schedule() {
+    private LinkedList<Job> schedule(LinkedList<PCB> processes, int quantum) {
+        LinkedList<Job> timeline = new LinkedList<>();
         Queue<PCB> queue = new LinkedList<>(processes);
         int time = 0;
 
@@ -47,13 +47,13 @@ public class RR {
             PCB proc = queue.poll();
             int finishT;
 
-            if (proc.getRemainingT() > QUANTUM) {
-                finishT = time + QUANTUM;
-                proc.setRemainingT(proc.getRemainingT() - QUANTUM);
+            if (proc.getRemainingT() > quantum) {
+                finishT = time + quantum;
+                proc.setRemainingT(proc.getRemainingT() - quantum);
                 queue.add(proc);
             }
-            else if (proc.getRemainingT() == QUANTUM) {
-                finishT = time + QUANTUM;
+            else if (proc.getRemainingT() == quantum) {
+                finishT = time + quantum;
                 proc.setWaitingT(finishT - proc.getBurstT());
                 proc.setCompletionT(finishT);
             }
@@ -66,6 +66,8 @@ public class RR {
             timeline.add(new Job(proc.getPId(), time, finishT));
             time = finishT;
         }
+
+        return timeline;
     }
 
 }

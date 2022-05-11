@@ -6,16 +6,15 @@ import java.util.PriorityQueue;
 
 public class Priority {
 
-    private final LinkedList<PCB> processes = new LinkedList<>();
-    private final LinkedList<Job> timeline = new LinkedList<>();
-
     public Priority() {
-        getProcesses();
-        schedule();
+        LinkedList<PCB> processes = getProcesses();
+        LinkedList<Job> timeline = schedule(processes);
         Main.output(processes, timeline, "Priority");
     }
 
-    private void getProcesses() {
+    private LinkedList<PCB> getProcesses() {
+        LinkedList<PCB> processes = new LinkedList<>();
+
         File file = new File("src/testdata1 for priortiy.txt");
         BufferedReader br;
         try {
@@ -29,18 +28,20 @@ public class Priority {
                     break;
 
                 String[] nums = br.readLine().split(",");
-
                 int burstT = Integer.parseInt(nums[0].strip());
                 int priority = Integer.parseInt(nums[1].strip());
 
-                processes.add(new PCB(pId, burstT, arrivalT++, priority));
+                processes.add(new PCB(pId, arrivalT++, burstT, priority));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return processes;
     }
 
-    private void schedule() {
+    private LinkedList<Job> schedule(LinkedList<PCB> processes) {
+        LinkedList<Job> timeline = new LinkedList<>();
         PriorityQueue<PCB> queue = new PriorityQueue<>(processes);
         int time = 0;
 
@@ -55,6 +56,8 @@ public class Priority {
 
             time = finishT;
         }
+
+        return timeline;
     }
 
 }

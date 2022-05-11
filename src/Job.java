@@ -1,7 +1,7 @@
 public class Job {
 
     private final String pId;
-    private int startT;
+    private final int startT;
     private int endT;
 
     public Job(String pId, int startT, int endT) {
@@ -16,10 +16,6 @@ public class Job {
 
     public int getStartT() {
         return startT;
-    }
-
-    public void setStartT(int startT) {
-        this.startT = startT;
     }
 
     public int getEndT() {
