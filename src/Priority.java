@@ -50,13 +50,12 @@ public class Priority {
 
         while (!queue.isEmpty()) {
             PCB proc = queue.poll();
-
             int finishT = time + proc.getBurstT();
+
             proc.setWaitingT(time);
             proc.setCompletionT(finishT);
 
-            Job job = new Job(proc.getPId(), time, finishT);
-            timeline.add(job);
+            timeline.add(new Job(proc.getPId(), time, finishT));
 
             time = finishT;
         }
