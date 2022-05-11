@@ -9,10 +9,6 @@ public class Priority {
     private final LinkedList<PCB> processes = new LinkedList<>();
     private final LinkedList<Job> timeline = new LinkedList<>();
 
-    public static void main(String[] args) {
-        new Priority();
-    }
-
     public Priority() {
         getProcesses();
         schedule();
