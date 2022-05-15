@@ -2,8 +2,13 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.List;
 
 public class SRTF {
+
+    public static void main(String[] args) {
+        new SRTF();
+    }
 
     public SRTF() {
         LinkedList<PCB> processes = getProcesses();
@@ -40,30 +45,34 @@ public class SRTF {
 
         int clock = 0;
         while (!checkCompleted(processes)) {
-            PCB minBurstProc = null;
-            int minBurst = Integer.MAX_VALUE;
+            PCB proc = getMin(processes, clock);
+            while (proc == null)
+                proc = getMin(processes, ++clock);
 
-            for (PCB p : processes) {
-                if (!p.isCompleted() && p.getArrivalT() <= clock && p.getRemainingT() < minBurst) {
-                    minBurst = p.getRemainingT();
-                    minBurstProc = p;
-                }
-            }
+            timeline.add(new Job(proc.getPId(), clock, clock + 1));
+            proc.setRemainingT(proc.getRemainingT() - 1);
 
-            if (minBurstProc != null) {
-                timeline.add(new Job(minBurstProc.getPId(), clock, clock + 1));
-                minBurstProc.setRemainingT(minBurstProc.getRemainingT() - 1);
+            clock++;
 
-                clock++;
-
-                if (minBurstProc.getRemainingT() == 0) {
-                    minBurstProc.setWaitingT(clock - minBurstProc.getArrivalT() - minBurstProc.getBurstT());
-                    minBurstProc.setCompletionT(clock);
-                }
+            if (proc.getRemainingT() == 0) {
+                proc.setWaitingT(clock - proc.getArrivalT() - proc.getBurstT());
+                proc.setCompletionT(clock);
             }
         }
 
         return timeline;
+    }
+
+    private PCB getMin(List<PCB> processes, int clock) {
+        PCB minBurstProc = null;
+        int minBurst = Integer.MAX_VALUE;
+        for (PCB p : processes) {
+            if (!p.isCompleted() && p.getArrivalT() <= clock && p.getRemainingT() < minBurst) {
+                minBurst = p.getRemainingT();
+                minBurstProc = p;
+            }
+        }
+        return minBurstProc;
     }
 
     private boolean checkCompleted(LinkedList<PCB> parr) {
