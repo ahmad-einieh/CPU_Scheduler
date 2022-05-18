@@ -6,7 +6,7 @@ public class PCB implements Comparable<PCB> {
     private final int priority;
     private int remainingT;
     private int waitingT;
-    private int completionT;
+    private int turnaroundT;
 
     public PCB(String pId, int arrivalT, int burstT, int priority) {
         this.pId = pId;
@@ -47,16 +47,16 @@ public class PCB implements Comparable<PCB> {
         this.waitingT = waitingT;
     }
 
-    public int getCompletionT() {
-        return completionT;
+    public int getTurnaroundT() {
+        return turnaroundT;
     }
 
-    public void setCompletionT(int completionT) {
-        this.completionT = completionT;
+    public void setTurnaroundT(int turnaroundT) {
+        this.turnaroundT = turnaroundT;
     }
 
     public boolean isCompleted() {
-        return completionT != 0;
+        return turnaroundT != 0;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class PCB implements Comparable<PCB> {
                 ", priority=" + priority +
                 ", remainingT=" + remainingT +
                 ", waitingT=" + waitingT +
-                ", completionT=" + completionT +
+                ", turnaroundT=" + turnaroundT +
                 '}';
     }
 

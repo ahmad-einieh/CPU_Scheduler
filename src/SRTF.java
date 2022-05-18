@@ -13,14 +13,13 @@ public class SRTF {
     public SRTF() {
         LinkedList<PCB> processes = getProcesses();
         LinkedList<Job> timeline = schedule(processes);
-        cleanup(timeline);
         Main.output(processes, timeline, "SRTF");
     }
 
     private LinkedList<PCB> getProcesses() {
         LinkedList<PCB> processes = new LinkedList<>();
 
-        File file = new File("src/testdata1 for SRTF.txt");
+        File file = new File("testdata1 for SRTF.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
@@ -56,7 +55,7 @@ public class SRTF {
 
             if (proc.getRemainingT() == 0) {
                 proc.setWaitingT(clock - proc.getArrivalT() - proc.getBurstT());
-                proc.setCompletionT(clock);
+                proc.setTurnaroundT(clock);
             }
         }
 
@@ -81,18 +80,6 @@ public class SRTF {
                 return false;
         }
         return true;
-    }
-
-    private void cleanup(LinkedList<Job> timeline) {
-        int i = 0;
-        while (i+1 < timeline.size()) {
-            if (timeline.get(i).getPId().equals(timeline.get(i+1).getPId())) {
-                timeline.get(i).setEndT(timeline.get(i+1).getEndT());
-                timeline.remove(i+1);
-            }
-            else
-                i++;
-        }
     }
 
 }

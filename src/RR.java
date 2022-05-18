@@ -15,7 +15,7 @@ public class RR {
     private LinkedList<PCB> getProcesses() {
         LinkedList<PCB> processes = new LinkedList<>();
 
-        File file = new File("src/testdata21 for RR.txt");
+        File file = new File("testdata21 for RR.txt");
         BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(file));
@@ -55,12 +55,12 @@ public class RR {
             else if (proc.getRemainingT() == quantum) {
                 finishT = time + quantum;
                 proc.setWaitingT(finishT - proc.getBurstT());
-                proc.setCompletionT(finishT);
+                proc.setTurnaroundT(finishT);
             }
             else {
                 finishT = time + proc.getRemainingT();
                 proc.setWaitingT(finishT - proc.getBurstT());
-                proc.setCompletionT(finishT);
+                proc.setTurnaroundT(finishT);
             }
 
             timeline.add(new Job(proc.getPId(), time, finishT));
