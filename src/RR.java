@@ -2,23 +2,27 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class RR {
 
+    public static void main(String[] args) {
+        new RR(1);
+    }
+
     public RR(int quantum) {
-        LinkedList<PCB> processes = getProcesses();
-        LinkedList<Job> timeline = schedule(processes, quantum);
+        List<PCB> processes = getProcesses();
+        List<Job> timeline = schedule(processes, quantum);
         Main.output(processes, timeline, "RR");
     }
 
-    private LinkedList<PCB> getProcesses() {
-        LinkedList<PCB> processes = new LinkedList<>();
+    private List<PCB> getProcesses() {
+        List<PCB> processes = new LinkedList<>();
 
         File file = new File("testdata21 for RR.txt");
-        BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader(file));
+            BufferedReader br = new BufferedReader(new FileReader(file));
 
             int arrivalT = 0;
             while (true) {
@@ -31,6 +35,7 @@ public class RR {
 
                 processes.add(new PCB(pId, arrivalT++, burstTime, 0));
             }
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -38,8 +43,8 @@ public class RR {
         return processes;
     }
 
-    private LinkedList<Job> schedule(LinkedList<PCB> processes, int quantum) {
-        LinkedList<Job> timeline = new LinkedList<>();
+    private List<Job> schedule(List<PCB> processes, int quantum) {
+        List<Job> timeline = new LinkedList<>();
         Queue<PCB> queue = new LinkedList<>(processes);
         int time = 0;
 

@@ -19,10 +19,8 @@ public class NonPreemptivePriority {
         List<PCB> processes = new LinkedList<>();
 
         File file = new File("testdata1 for priortiy.txt");
-        BufferedReader br;
         try {
-            br = new BufferedReader(new FileReader(file));
-
+            BufferedReader br = new BufferedReader(new FileReader(file));
             while (true) {
                 String pId = br.readLine();
 
@@ -38,6 +36,7 @@ public class NonPreemptivePriority {
 
                 processes.add(new PCB(pId, arrivalT, burstT, priority));
             }
+            br.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
